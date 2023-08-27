@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const appRoutes = require("./routes/approutes")
+const routes = require("./routes/routes")
 
 const { sequelize, Sequelize } = require('./config/database')
 const empregadosModel = require('./models/empregados')(sequelize, Sequelize)
@@ -50,10 +50,10 @@ const hbs = handlebars.create({
         inss += (value - 1320.01) * 0.09;
       }
       liquido -= inss;
-      
+
       let irf = 0;
       if (liquido >= 4664.69) {
-        irf = liquido * 0.27 - 884.96; 
+        irf = liquido * 0.27 - 884.96;
       } else if (liquido >= 3751.06) {
         irf = liquido * 0.225 - 651.73;
       } else if (liquido >= 2826.66) {
@@ -78,7 +78,7 @@ app.use('/users', (req, res, next) => {
   next();
 });
 
-app.use(appRoutes)
+app.use(routes)
 
 app.listen(3000, () => {
   console.log('app is running');
